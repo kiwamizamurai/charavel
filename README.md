@@ -37,18 +37,6 @@ To stop and remove (container network image)
 
 - docker-compose down --rmi all
 
-## Configuring
-
-Open .env file in the src directory
-
-DB\_HOST=mysql
-
-> This name comes from the MySQL service we created in the docker-compose.yml file, and is used in the Docker network to reference the service from other containers.
-
-APP\_URL=http://localhost:8080
-
-> Add in the port number you’ve exposed in our nginx container to keep this pointing at a resolvable address.
-
 ## How to keep docker environment clean
 
 To check disk usage
