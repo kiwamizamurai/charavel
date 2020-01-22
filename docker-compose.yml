@@ -1,0 +1,85 @@
+version: "3"
+
+networks:
+  laravel:
+
+services:
+  php:
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+      # arguments for dockerfile
+      args:
+        - TZ=${TZ}
+    container_name: php
+#   host-ports:container-ports
+#   share files in specific directories
+    volumes:
+      - ./src:/var/www/html
+      - ./logs:/var/log/php
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+    ports:
+      - "9000:9000"
+#   change working directory in container
+#    environment:
+#      - DB_CONNECTION=mysql
+#      - DB_HOST=db
+#      - DB_DATABASE=${DB_NAME}
+#      - DB_USERNAME=${DB_USER}
+#      - DB_PASSWORD=${DB_PASS}
+#      - TZ=${TZ}
+#   connect to other container
+#   links:
+#     - sample_container
+    networks:
+      - laravel
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: nginx
+#    wait for app and db running
+    depends_on:
+      - php
+      - mysql
+    ports:
+      - "8080:80"
+    volumes:
+#        /var/www/html is default
+#        this is not for laravel, so we need custom default config file
+      - ./src:/var/www/html
+      - ./logs:/var/log/nginx
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    environment:
+      - TZ=${TZ}
+    networks:
+      - laravel
+
+  mysql:
+    image: mysql:5.7.22
+    container_name: mysql
+#    behavior when docker itself restart
+    restart: unless-stopped
+#    keep container running
+#    in other words, shell in container is enabled
+    tty: true
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db:/var/lib/mysql
+      - ./logs:/var/log/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    environment:
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASS}
+      - MYSQL_ROOT_PASSWORD=${DB_RPASS}
+      - SERVICE_TAGS=${SV_TAG}
+      - SERVICE_NAME=${SV_NAME}
+      - TZ=${TZ}
+    networks:
+      - laravel
+
+# top level volums, also called named-volume
+# every service can share this volume
+# volumes:
+#  db-store:

@@ -1,7 +1,79 @@
 ## Preface
+
 This is a first notebook on development with Laravel by layperson
 
-## Usage
+## Final Directory Structure
+
+```
+├── README.md
+├── db (############# For database #############)
+│   │
+│   ├── ...
+│   │
+│   └── ...
+├── docker
+│   ├── mysql
+│   │   └── my.cnf
+│   ├── nginx
+│   │   └── default.conf
+│   └── php
+│       ├── Dockerfile
+│       └── php.ini
+├── docker-compose.yml
+├── logs
+│    ├── access.log
+│    ├── access_nginx.log
+│    ├── error.log
+│    ├── error_mysql.log
+│    ├── error_nginx.log
+│    ├── query_mysql.log
+│    └── slow_mysql.log
+└── src
+    └── public
+        ├── index.html
+        └── phpinfo.php
+ ```
+
+As you can see, the final directory structure is `totally different` from current directry
+
+Once you run
+
+> docker-compose build && docker-compose up -d
+
+Your current direcrory will be something like this
+
+## Attention
+
+- .env.example
+
+this is just example of `.env`, so you should run the command like this
+
+> cp .env.example .env
+
+After you clone this repo, should create `db` directory that is for database.
+
+> mkdir db
+
+- /src/public
+
+this directory is for only check
+
+And, php container `does not have laravel` itself
+
+You can git clone this repositoy then put your own laravel project into /src, removing /public
+
+## Explanation
+
+Basically, each file has own explanation about their varibles and stuff like that.
+
+However, it is not compoleted. There must be some weight (comment) on each file based on my knowledge.
+
+
+---
+
+Under the above line, just my memo
+
+## Docker Usage
 
 To generate the image data
 
@@ -27,20 +99,6 @@ To stop and remove (container network image)
 
 - docker-compose down --rmi all
 
-## Configuring
-
-Open .env file in the src directory
-
-DB\_HOST=mysql
-
-> This name comes from the MySQL service we created in the docker-compose.yml file, and is used in the Docker network to reference the service from other containers.
-
-APP\_URL=http://localhost:8080
-
-> Add in the port number you’ve exposed in our nginx container to keep this pointing at a resolvable address.
-
-## How to keep docker environment clean
-
 To check disk usage
 
 - docker system df
@@ -63,8 +121,6 @@ To remove specific unused data
 
 
 
-## Memo
-
 ### nginx/default.conf
 
 this is mostly a boilerplate nginx configuration used with most basic Laravel app
@@ -75,12 +131,6 @@ this is php setting file.
 [mbstring] stands for multi-byte string.
 [error\_reposrting] defines the desplaying the error
 - https://qiita.com/shotets/items/3c95aef631b2c5eadae5
-
-### Error
-
-Once I run docker-copmose build command, Unfortunately a error occured.
-
-- 404 error
 
 ### docker-compose.yaml
 
@@ -118,6 +168,7 @@ In this Laravel project, I'm going to practice Vim, So I will list up several sh
 about entire projet
 - https://dev.to/aschmelyun/the-beauty-of-docker-for-local-laravel-development-13c0
 - https://qiita.com/ucan-lab/items/56c9dc3cf2e6762672f4https://qiita.com/ucan-lab/items/56c9dc3cf2e6762672f4
+
 about vim cheat sheet
 - https://vim.rtorr.com/
 
