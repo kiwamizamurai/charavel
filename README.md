@@ -1,7 +1,17 @@
 ## Preface
 This is a first notebook on development with Laravel by layperson
 
-## Usage
+## Check
+
+- /src/public
+
+this directory is for only check 
+
+And, php container does not have laravel itself
+
+You can git clone this repositoy then put your own laravel project into /src, removing /public
+
+## Docker Usage
 
 To generate the image data
 
@@ -118,6 +128,7 @@ In this Laravel project, I'm going to practice Vim, So I will list up several sh
 about entire projet
 - https://dev.to/aschmelyun/the-beauty-of-docker-for-local-laravel-development-13c0
 - https://qiita.com/ucan-lab/items/56c9dc3cf2e6762672f4https://qiita.com/ucan-lab/items/56c9dc3cf2e6762672f4
+
 about vim cheat sheet
 - https://vim.rtorr.com/
 
